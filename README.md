@@ -1,1 +1,0 @@
-# SSD-RKNN-Androida
