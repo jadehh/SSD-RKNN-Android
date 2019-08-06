@@ -1,1 +1,1 @@
-include ':app', ':libssddetect'
+include ':app', ':libssddetect', ':libssddetect2', ':libssddetect3'
