@@ -13,16 +13,18 @@ import static com.example.libssddetect.PostProcess.*;
 public class JavaBridgeSSD {
     public static final String TAG = "ssd";
     private String mModelName = "ssd.rknn";
+    private String mVideoName = "video.avi";
     public jade_tools jTools;
 
-    private String fileDirPath;     // file dir to store model cache
+    public String fileDirPath;     // file dir to store model cache
     private InferenceWrapper mInferenceWrapper;
     private Activity mActivity;
 
-    public JavaBridgeSSD(Activity activity,int id){
+    public JavaBridgeSSD(Activity activity,int id,int videoId){
         fileDirPath = activity.getCacheDir().getAbsolutePath();
         jTools = new jade_tools();
         jTools.copyRawFile(activity,fileDirPath,mModelName,id);
+        jTools.copyRawFile(activity,fileDirPath,mVideoName,videoId);
         mActivity = activity;
 
     }
