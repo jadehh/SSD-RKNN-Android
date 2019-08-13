@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class JavaBridgeSSD {
     public static final String TAG = "ssd";
-    private String mModelName = "ssd.rknn";
+    private String mModelName ;
     private String mVideoName = "video.avi";
     public jade_tools jTools;
 
@@ -32,12 +32,13 @@ public class JavaBridgeSSD {
     private InferenceWrapper mInferenceWrapper;
     private Activity mActivity;
     private InferenceResult mInferenceResult = new InferenceResult();  // detection result
-    public JavaBridgeSSD(Activity activity,int id,int videoId){
+    public JavaBridgeSSD(Activity activity,int id,int videoId,String modelName){
         try {
             mInferenceResult.init(activity.getAssets());
         } catch (IOException e) {
             e.printStackTrace();
         }
+        mModelName = modelName;
         fileDirPath = activity.getCacheDir().getAbsolutePath();
         jTools = new jade_tools();
         jTools.copyRawFile(activity,fileDirPath,mModelName,id);

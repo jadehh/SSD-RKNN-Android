@@ -1,5 +1,7 @@
 package com.rockchip.gpadc.ssddemo;
 
+import com.rockchip.jade.JadeLog;
+
 /**
  * Created by randall on 18-4-18.
  */
@@ -25,8 +27,9 @@ public class InferenceWrapper {
 
         mOutputs.mLocations = new float[numResult * 4];
         mOutputs.mClasses = new float[numResult * numClasses];
-
+        JadeLog.e(this,"Load Model: "+modelPath);
         init(inputSize, channel, numResult, numClasses, modelPath);
+        JadeLog.e(this,"Load Model Success");
     }
 
     public void deinit() {
