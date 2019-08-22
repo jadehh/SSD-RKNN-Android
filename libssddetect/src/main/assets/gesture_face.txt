@@ -1,0 +1,4 @@
+background
+others
+face
+thumb_up
