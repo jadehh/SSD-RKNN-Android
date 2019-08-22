@@ -36,7 +36,7 @@ public class PostProcess {
     public static final int INPUT_SIZE = 300;
     public static final int INPUT_CHANNEL = 3;
     public static final int NUM_RESULTS = 1917;
-    public static final int NUM_CLASSES = 2;    //输出分类
+    public static final int NUM_CLASSES = 4;    //输出分类
 
     private static final float Y_SCALE = 10.0f;
     private static final float X_SCALE = 10.0f;
@@ -54,7 +54,7 @@ public class PostProcess {
 
     public void init(AssetManager assetManager) throws IOException {
         loadCoderOptions(assetManager, "file:///android_asset/box_priors.txt", boxPriors);
-        loadLabelName(assetManager, "file:///android_asset/hand.txt", labels);
+        loadLabelName(assetManager, "file:///android_asset/gesture_face.txt", labels);
         recognitions.clear();
     }
 

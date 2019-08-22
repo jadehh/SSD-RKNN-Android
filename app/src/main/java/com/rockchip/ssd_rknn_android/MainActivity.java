@@ -52,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void showView() {
 
-        javaBridgeSSD = new JavaBridgeSSD(this, R.raw.ssd_mobilenet_v2_hand_do_quantization_tensorflow, R.raw.video,"ssd_mobilenet_v2_hand_do_quantization_tensorflow.rknn");
+        javaBridgeSSD = new JavaBridgeSSD(this, R.raw.ssd_mobilenet_v1_gesture_face_do_quantization_tensorflow, R.raw.gesture_face,"ssd_mobilenet_v1_gesture_face_do_quantization_tensorflow.rknn");
         javaBridgeSSD.loadOpencv();
-        videoCapture =   new VideoCapture(javaBridgeSSD.fileDirPath + "/" + "video.avi");
+        videoCapture =   new VideoCapture(javaBridgeSSD.fileDirPath + "/" + "gesture_face.avi");
         JadeLog.e(this, "" + videoCapture.get(Videoio.CAP_PROP_FRAME_COUNT));
         new Thread(){
             @Override
