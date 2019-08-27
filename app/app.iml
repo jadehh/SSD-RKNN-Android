@@ -89,6 +89,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/apk_list" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/blame" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/build-info" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/builds" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/bundle_manifest" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/check_manifest_result" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/compatible_screen_manifest" />
@@ -171,6 +172,12 @@
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.test.espresso:espresso-idling-resource:3.2.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: net.sf.kxml:kxml2:2.3.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.collection:collection:1.0.0@jar" level="project" />
+    <orderEntry type="module" module-name="jade" />
+    <orderEntry type="module" module-name="opencv41Libs" />
+    <orderEntry type="module" module-name="libssddetect" />
+    <orderEntry type="module" module-name="jade" />
+    <orderEntry type="module" module-name="opencv41Libs" />
+    <orderEntry type="module" module-name="libssddetect" />
     <orderEntry type="module" module-name="jade" />
     <orderEntry type="module" module-name="opencv41Libs" />
     <orderEntry type="module" module-name="libssddetect" />

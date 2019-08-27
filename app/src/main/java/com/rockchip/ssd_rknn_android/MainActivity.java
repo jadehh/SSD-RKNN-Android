@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Trace;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -36,15 +35,21 @@ public class MainActivity extends AppCompatActivity {
         }
     };
     private static ImageView imageView;
+    private static ImageView faceImageView;
+    private static ImageView smallImageView;
     private static VideoCapture videoCapture;
     private static JavaBridgeSSD javaBridgeSSD;
     private Bitmap bitmap;
+    private Bitmap faceBitmap;
+    private Bitmap smallBitmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imageView = findViewById(R.id.imageView);
-        setSystemUIVisible(true);
+        faceImageView = findViewById(R.id.faceImageView);
+        smallImageView = findViewById(R.id.samllerImageView);
+        setSystemUIVisible(false);
         showView();
 
 
@@ -52,8 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void showView() {
 
-        javaBridgeSSD = new JavaBridgeSSD(this, R.raw.ssd_mobilenet_v1_gesture_face_do_quantization_tensorflow, R.raw.gesture_face,"ssd_mobilenet_v1_gesture_face_do_quantization_tensorflow.rknn");
-        javaBridgeSSD.loadOpencv();
+        javaBridgeSSD = new JavaBridgeSSD(this);
         videoCapture =   new VideoCapture(javaBridgeSSD.fileDirPath + "/" + "gesture_face.avi");
         JadeLog.e(this, "" + videoCapture.get(Videoio.CAP_PROP_FRAME_COUNT));
         new Thread(){
@@ -63,14 +67,23 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < videoCapture.get(Videoio.CAP_PROP_FRAME_COUNT); i++) {
                     Mat img = new Mat();
                     videoCapture.read(img);
-                    ArrayList<InferenceResult.Recognition> recognitions = javaBridgeSSD.Inference(img);
-                    if (recognitions.size() > 0) {
-                        JadeLog.e(this, "id = " + recognitions.get(0).getId() + "title = " + recognitions.get(0).getTitle() + "confidence = " + recognitions.get(0).getConfidence());
-                    } else {
-                        JadeLog.e(this, "没有检测到目标");
+                    String path = javaBridgeSSD.Predict(img,0.9,javaBridgeSSD.fileDirPath+javaBridgeSSD.jTools.getTime()+".jpg");
+                    if (!path.isEmpty()){
+                        JadeLog.e(this,"save_file_path = "+path);
+                    }else{
+                        JadeLog.e(this,"没有图片");
                     }
-                    Mat drawImg = javaBridgeSSD.DrawBboxesText(img,recognitions);
+                    ArrayList<InferenceResult.Recognition> recognitions = javaBridgeSSD.Inference(img);
+                    Mat drawImg = javaBridgeSSD.DrawBboxesText(img,recognitions,0.9);
+                    Mat faceImg = javaBridgeSSD.PredictFaceGesture(img,recognitions,0.9);
                     bitmap = Bitmap.createBitmap(drawImg.width(), drawImg.height(), Bitmap.Config.ARGB_8888);
+                    if (faceImg.size().width > 0 && faceImg.size().height > 0){
+                        faceBitmap = Bitmap.createBitmap(faceImg.width(), faceImg.height(), Bitmap.Config.ARGB_8888);
+                        Utils.matToBitmap(faceImg,faceBitmap);
+
+                        smallBitmap = Bitmap.createBitmap(img.width(), img.height(), Bitmap.Config.ARGB_8888);
+                        Utils.matToBitmap(drawImg,smallBitmap);
+                    }
                     Utils.matToBitmap(drawImg, bitmap);
                     //处理完成后给handler发送消息  
                     Message msg = new Message();
@@ -85,6 +98,11 @@ public class MainActivity extends AppCompatActivity {
     }
     public void  reflashUI(){
         imageView.setImageBitmap(bitmap);
+        if (faceBitmap != null){
+            faceImageView.setImageBitmap(faceBitmap);
+            smallImageView.setImageBitmap(smallBitmap);
+        }
+
     }
 
 
