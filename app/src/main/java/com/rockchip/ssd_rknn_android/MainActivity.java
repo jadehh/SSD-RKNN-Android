@@ -67,11 +67,11 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < videoCapture.get(Videoio.CAP_PROP_FRAME_COUNT); i++) {
                     Mat img = new Mat();
                     videoCapture.read(img);
-                    String path = javaBridgeSSD.Predict(img,0.9,javaBridgeSSD.fileDirPath+javaBridgeSSD.jTools.getTime()+".jpg");
-                    if (!path.isEmpty()){
-                        JadeLog.e(this,"save_file_path = "+path);
+                    Boolean isSuccess = javaBridgeSSD.Predict(img,0.9,javaBridgeSSD.fileDirPath+javaBridgeSSD.jTools.getTime()+".jpg");
+                    if (isSuccess){
+                        JadeLog.e(this,"保存图片成功");
                     }else{
-                        JadeLog.e(this,"没有图片");
+                        JadeLog.e(this,"保存图片失败");
                     }
                     ArrayList<InferenceResult.Recognition> recognitions = javaBridgeSSD.Inference(img);
                     Mat drawImg = javaBridgeSSD.DrawBboxesText(img,recognitions,0.9);

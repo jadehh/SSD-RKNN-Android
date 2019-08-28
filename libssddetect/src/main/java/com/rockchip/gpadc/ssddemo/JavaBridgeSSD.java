@@ -50,7 +50,7 @@ public class JavaBridgeSSD {
         String paramPath = fileDirPath + "/" + mModelName;
         mInferenceWrapper = new InferenceWrapper(INPUT_SIZE,INPUT_CHANNEL,NUM_RESULTS,NUM_CLASSES,paramPath);
     }
-    public String Predict(Mat img,double threshold,String savePath){
+    public Boolean Predict(Mat img,double threshold,String savePath){
         mInferenceResult.reset();
         long oldTime = System.currentTimeMillis();
         long currentTime;
@@ -66,8 +66,8 @@ public class JavaBridgeSSD {
         ArrayList<InferenceResult.Recognition> recognitions = mInferenceResult.getResult();
         currentTime = System.currentTimeMillis();
         JadeLog.e(this,"预测时间 "+(currentTime-oldTime)+" ms");
-        String path = GetFaceImgPath(img,recognitions,threshold,savePath);
-        return path;
+        Boolean success = GetFaceImgPath(img,recognitions,threshold,savePath);
+        return success;
     }
     public ArrayList<InferenceResult.Recognition> Inference(Mat img){
         mInferenceResult.reset();
@@ -190,7 +190,7 @@ public class JavaBridgeSSD {
         return cvtImg;
     }
 
-    public String GetFaceImgPath(Mat img,ArrayList<InferenceResult.Recognition> recognitions,double threshold,String save_img_path){
+    public Boolean GetFaceImgPath(Mat img,ArrayList<InferenceResult.Recognition> recognitions,double threshold,String save_img_path){
         Size size = img.size();
         Double width = size.width;
         Double height = size.height;
@@ -225,9 +225,9 @@ public class JavaBridgeSSD {
             Imgproc.getRectSubPix(img, face_size, centerPoint, face_img, -1);
             JadeLog.e(this,save_img_path);
             Imgcodecs.imwrite(save_img_path ,face_img);
-            return save_img_path;
+            return  true;
         }else{
-            return null;
+            return false;
         }
 
     }
