@@ -12,7 +12,6 @@ import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
-import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -23,13 +22,12 @@ import com.rockchip.gpadc.ssddemo.InferenceResult.OutputBuffer;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.TreeMap;
 
 public class JavaBridgeSSD {
     public static final String TAG = "ssd";
     public jade_tools jTools;
     private String mVideoName = "gesture_face.avi";
-    private String mModelName = "ssd_mobilenet_v1_gesture_face_do_quantization_tensorflow.rknn" ;
+    private String mModelName = "ssd_mobilenet_v1_face_gesture_do_quantization_2019_08_27_tensorflow.rknn" ;
     public String fileDirPath;     // file dir to store model cache
     private InferenceWrapper mInferenceWrapper;
     private Activity mActivity;
