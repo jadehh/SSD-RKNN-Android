@@ -1,5 +1,6 @@
 package com.rockchip.jade;
 
+import io.github.pixee.security.ZipSecurity;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -63,7 +64,7 @@ public class ZipFiles {
 
       public static void unzip(String path, String target) throws IOException {
         File targetfolder = new File(target);
-        ZipInputStream zi = new ZipInputStream(new FileInputStream(path));
+        ZipInputStream zi = ZipSecurity.createHardenedInputStream(new FileInputStream(path));
         ZipEntry ze = null;
         FileOutputStream fo = null;
         byte[] buff = new byte[1024];
